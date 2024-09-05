@@ -1,16 +1,18 @@
 import { useState } from 'react';
-import { tempMovieData } from './assets/mock';
+import { tempMovieData, tempWatchedData } from './assets/mock';
 import NavBar from './components/NavBar';
 import Main from './components/Main';
 import NumResults from './components/NumResults';
 import Logo from './components/Logo';
 import Search from './components/Search';
-import ListBox from './components/ListBox';
-import WatchedBox from './components/WatchedBox';
+import Box from './components/Box';
 import MovieList from './components/MovieList';
+import WatchedSummary from './components/WatchedSummary';
+import WatchedMovieList from './components/WatchedMovieList';
 
 function App() {
   const [movies, setMovies] = useState(tempMovieData);
+  const [watched, setWatched] = useState(tempWatchedData);
   return (
     <>
       <NavBar>
@@ -19,10 +21,15 @@ function App() {
         <NumResults movies={movies} />
       </NavBar>
       <Main>
-        <ListBox>
+        <Box>
           <MovieList movies={movies} />
-        </ListBox>
-        <WatchedBox />
+        </Box>
+        <Box>
+          <>
+            <WatchedSummary watched={watched} />
+            <WatchedMovieList watched={watched} />
+          </>
+        </Box>
       </Main>
     </>
   );
