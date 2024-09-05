@@ -1,9 +1,6 @@
-import { useState } from 'react';
-import { tempMovieData } from '../assets/mock';
 import Movie from './Movie';
 
-function MovieList() {
-  const [movies, setMovies] = useState(tempMovieData);
+function MovieList({ movies }) {
   return (
     <ul className="list">
       {movies?.map((movie) => (
