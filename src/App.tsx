@@ -13,6 +13,7 @@ import WatchedMovieList from './components/WatchedMovieList';
 function App() {
   const [movies, setMovies] = useState(tempMovieData);
   const [watched, setWatched] = useState(tempWatchedData);
+
   return (
     <>
       <NavBar>
@@ -25,10 +26,8 @@ function App() {
           <MovieList movies={movies} />
         </Box>
         <Box>
-          <>
-            <WatchedSummary watched={watched} />
-            <WatchedMovieList watched={watched} />
-          </>
+          <WatchedSummary watched={watched} />
+          <WatchedMovieList watched={watched} />
         </Box>
       </Main>
     </>
