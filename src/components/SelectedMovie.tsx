@@ -21,9 +21,9 @@ function SelectedMovie({
   const [isLoading, setIsLoading] = useState(false);
   const [userRating, setUserRating] = useState('');
 
-  const isWatched = watched.map((movie) => movie.imdbId).includes(+selectedId);
+  const isWatched = watched.map((movie) => movie.imdbId).includes(selectedId);
   const watchedUserRating = watched.find(
-    (movie) => movie.imdbId === +selectedId
+    (movie) => movie.imdbId === selectedId
   )?.userRating;
 
   useEffect(() => {
@@ -37,9 +37,25 @@ function SelectedMovie({
     getMovieDetails(selectedId);
   }, [selectedId]);
 
+  useEffect(() => {
+    if (!movie.Title) return;
+    document.title = `Movie | ${movie.Title}`;
+    return () => (document.title = 'usePopcorn');
+  }, [movie.Title]);
+
+  useEffect(() => {
+    const handleEscPress = (evt: KeyboardEvent) => {
+      if (evt.code === 'Escape') {
+        onMovieDetailsClose();
+      }
+    };
+    document.addEventListener('keydown', handleEscPress);
+    return () => document.removeEventListener('keydown', handleEscPress);
+  }, [onMovieDetailsClose]);
+
   const handleAdd = () => {
     const newWatchedMovie: MovieDetailsType = {
-      imdbId: +selectedId,
+      imdbId: selectedId,
       title: movie.Title,
       released: movie.Released,
       poster: movie.Poster,
