@@ -1,10 +1,24 @@
+import { MovieDetailsType } from '../App-v1';
 import { average } from '../assets/utils';
-
-function WatchedSummary({ watched }) {
-  const avgImdbRating = average(watched.map((movie) => movie.imdbRating));
-  const avgUserRating = average(watched.map((movie) => movie.userRating));
-  const avgRuntime = average(watched.map((movie) => movie.runtime));
-
+interface WatchedSummaryProps {
+  watched: MovieDetailsType[];
+}
+function WatchedSummary({ watched }: WatchedSummaryProps) {
+  const avgImdbRating = average(
+    watched
+      .map((movie) => movie.imdbRating)
+      .filter((rating): rating is number => rating !== undefined)
+  );
+  const avgUserRating = average(
+    watched
+      .map((movie) => movie.userRating)
+      .filter((rating): rating is number => rating !== undefined)
+  );
+  const avgRuntime = average(
+    watched
+      .map((movie) => movie.runtime)
+      .filter((rating): rating is number => rating !== undefined)
+  );
   return (
     <div className="summary">
       <h2>Movies you watched</h2>
@@ -19,11 +33,11 @@ function WatchedSummary({ watched }) {
         </p>
         <p>
           <span>🌟</span>
-          <span>{avgUserRating}</span>
+          <span>{avgUserRating.toFixed(0)}</span>
         </p>
         <p>
           <span>⏳</span>
-          <span>{avgRuntime} min</span>
+          <span>{avgRuntime.toFixed(0)} min</span>
         </p>
       </div>
     </div>

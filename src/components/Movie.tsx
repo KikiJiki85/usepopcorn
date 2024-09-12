@@ -1,6 +1,13 @@
-function Movie({ movie }) {
+import { MovieType, SelectedIdType } from '../App-v1';
+
+interface MovieProps {
+  movie: MovieType;
+  onClick: (id: SelectedIdType) => void;
+}
+
+function Movie({ movie, onClick }: MovieProps) {
   return (
-    <li>
+    <li onClick={() => onClick(movie.imdbID)}>
       <img src={movie.Poster} alt={`${movie.Title} poster`} />
       <h3>{movie.Title}</h3>
       <div>

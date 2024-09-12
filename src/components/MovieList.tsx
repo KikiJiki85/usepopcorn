@@ -1,10 +1,16 @@
+import { MovieType, SelectedIdType } from '../App-v1';
 import Movie from './Movie';
 
-function MovieList({ movies }) {
+interface MovieListProps {
+  movies: MovieType[];
+  onSelectMovie: (id: SelectedIdType) => void;
+}
+
+function MovieList({ movies, onSelectMovie }: MovieListProps) {
   return (
-    <ul className="list">
+    <ul className="list list-movies">
       {movies?.map((movie) => (
-        <Movie movie={movie} key={movie.imdbID} />
+        <Movie movie={movie} key={movie.imdbID} onClick={onSelectMovie} />
       ))}
     </ul>
   );
