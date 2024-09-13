@@ -16,7 +16,10 @@ function WatchedSummary({ watched }: WatchedSummaryProps) {
   );
   const avgRuntime = average(
     watched
-      .map((movie) => movie.runtime)
+      .map((movie) => {
+        if (movie.Runtime !== undefined) return +movie.Runtime;
+        return NaN;
+      })
       .filter((rating): rating is number => rating !== undefined)
   );
   return (

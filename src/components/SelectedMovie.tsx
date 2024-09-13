@@ -17,9 +17,21 @@ function SelectedMovie({
   onAddWatched,
   watched,
 }: SelectedMovieProps) {
-  const [movie, setMovie] = useState<MovieDetailsType>({});
+  const [movie, setMovie] = useState<MovieDetailsType>({
+    Poster: '',
+    Title: '',
+    Released: '',
+    Runtime: '',
+    Genre: '',
+    imdbRating: 0,
+    Plot: '',
+    Actors: '',
+    Director: '',
+    userRating: 0,
+    imdbId: '',
+  });
   const [isLoading, setIsLoading] = useState(false);
-  const [userRating, setUserRating] = useState('');
+  const [userRating, setUserRating] = useState<number | string>('');
 
   const isWatched = watched.map((movie) => movie.imdbId).includes(selectedId);
   const watchedUserRating = watched.find(
@@ -40,7 +52,9 @@ function SelectedMovie({
   useEffect(() => {
     if (!movie.Title) return;
     document.title = `Movie | ${movie.Title}`;
-    return () => (document.title = 'usePopcorn');
+    return () => {
+      document.title = 'usePopcorn';
+    };
   }, [movie.Title]);
 
   useEffect(() => {
@@ -56,11 +70,11 @@ function SelectedMovie({
   const handleAdd = () => {
     const newWatchedMovie: MovieDetailsType = {
       imdbId: selectedId,
-      title: movie.Title,
-      released: movie.Released,
-      poster: movie.Poster,
+      Title: movie.Title,
+      Released: movie.Released,
+      Poster: movie.Poster,
       imdbRating: Number(movie.imdbRating),
-      runtime: Number(movie.Runtime?.split(' ')[0]),
+      Runtime: movie.Runtime?.split(' ')[0],
       userRating: +userRating,
     };
 
@@ -95,7 +109,7 @@ function SelectedMovie({
                     maxRating={10}
                     size={28}
                     onSetRating={setUserRating}
-                    defaultRating={userRating}
+                    defaultRating={Number(userRating)}
                   />
                   {userRating && (
                     <button className="btn-add" onClick={handleAdd}>

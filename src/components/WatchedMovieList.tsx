@@ -3,7 +3,7 @@ import WatchedMovie from './WatchedMovie';
 
 interface WatchedMovieListProps {
   watched: MovieDetailsType[];
-  handleRemoveWatch: (id: number | undefined) => void;
+  handleRemoveWatch: (id: string) => void;
 }
 
 function WatchedMovieList({

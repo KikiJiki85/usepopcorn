@@ -2,14 +2,14 @@ import { MovieDetailsType } from '../App-v1';
 
 interface WatchedMovieProps {
   movie: MovieDetailsType;
-  handleRemoveWatch: (id: number | undefined) => void;
+  handleRemoveWatch: (id: string) => void;
 }
 
 function WatchedMovie({ movie, handleRemoveWatch }: WatchedMovieProps) {
   return (
     <li>
-      <img src={movie.poster} alt={`${movie.title} poster`} />
-      <h3>{movie.title}</h3>
+      <img src={movie.Poster} alt={`${movie.Title} poster`} />
+      <h3>{movie.Title}</h3>
       <div>
         <p>
           <span>⭐️</span>
@@ -21,7 +21,7 @@ function WatchedMovie({ movie, handleRemoveWatch }: WatchedMovieProps) {
         </p>
         <p>
           <span>⏳</span>
-          <span>{movie.runtime} min</span>
+          <span>{movie.Runtime} min</span>
         </p>
         <button
           className="btn-delete"

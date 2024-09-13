@@ -25,17 +25,17 @@ export interface MovieType {
 }
 
 export interface MovieDetailsType {
-  poster?: string;
-  title?: string;
-  released?: string;
-  runtime?: number;
-  genre?: string;
+  Poster?: string;
+  Title?: string;
+  Released?: string;
+  Runtime?: string;
+  Genre?: string;
   imdbRating?: number;
-  plot?: string;
-  actors?: string;
-  director?: string;
+  Plot?: string;
+  Actors?: string;
+  Director?: string;
   userRating?: number;
-  imdbId?: number;
+  imdbId: string;
 }
 
 function App() {
@@ -58,7 +58,7 @@ function App() {
     setWatched((prev) => [...prev, movie]);
   };
 
-  const handleRemoveWatch = (id: number | undefined) => {
+  const handleRemoveWatch = (id: string) => {
     setWatched((prev) => prev.filter((movie) => movie.imdbId !== id));
   };
 
@@ -80,7 +80,7 @@ function App() {
         setError('');
       } catch (err) {
         if (err instanceof Error) {
-          console.error(err.message);
+          console.log(err.message);
           if (err.name !== 'AbortError') setError(err.message);
         }
       } finally {
@@ -88,6 +88,7 @@ function App() {
       }
     }
     if (query.length < 3) return;
+    handleCloseMovie();
     fetchMovies();
 
     return () => controller.abort();
