@@ -41,7 +41,7 @@ function SelectedMovie({
   useEffect(() => {
     async function getMovieDetails(id: string) {
       setIsLoading(true);
-      const res = await fetch(`http://www.omdbapi.com/?apikey=${KEY}&i=${id}`);
+      const res = await fetch(`https://www.omdbapi.com/?apikey=${KEY}&i=${id}`);
       const data = await res.json();
       setMovie(data);
       setIsLoading(false);
