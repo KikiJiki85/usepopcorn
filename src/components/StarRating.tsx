@@ -3,7 +3,7 @@ import { useState } from 'react';
 const containerStyle = {
   display: 'flex',
   alignItems: 'center',
-  gap: '16px',
+  gap: '8px',
 };
 
 const starContainerStyle = {

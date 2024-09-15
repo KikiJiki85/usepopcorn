@@ -1,20 +1,11 @@
-import { ReactNode, useState } from 'react';
+import { ReactNode } from 'react';
 
 interface BoxProps {
   children: ReactNode;
 }
 
 function Box({ children }: BoxProps) {
-  const [isOpen, setIsOpen] = useState(true);
-
-  return (
-    <div className="box">
-      <button className="btn-toggle" onClick={() => setIsOpen((open) => !open)}>
-        {isOpen ? '–' : '+'}
-      </button>
-      {isOpen && children}
-    </div>
-  );
+  return <div className="box">{children}</div>;
 }
 
 export default Box;

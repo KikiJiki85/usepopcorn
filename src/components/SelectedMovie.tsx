@@ -89,7 +89,12 @@ function SelectedMovie({
       ) : (
         <>
           <header>
-            <img src={movie.Poster} alt={movie.Title} />
+            <img
+              src={
+                movie.Poster === 'N/A' ? '/images/no-image.svg' : movie.Poster
+              }
+              alt={movie.Title}
+            />
             <div className="details-overview">
               <h2>{movie.Title}</h2>
               <p>

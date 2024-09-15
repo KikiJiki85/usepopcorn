@@ -8,7 +8,10 @@ interface MovieProps {
 function Movie({ movie, onClick }: MovieProps) {
   return (
     <li onClick={() => onClick(movie.imdbID)}>
-      <img src={movie.Poster} alt={`${movie.Title} poster`} />
+      <img
+        src={movie.Poster === 'N/A' ? '/images/no-image.svg' : movie.Poster}
+        alt={`${movie.Title} poster`}
+      />
       <h3>{movie.Title}</h3>
       <div>
         <p>
