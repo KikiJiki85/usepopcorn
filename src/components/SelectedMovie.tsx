@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import Loader from './Loader';
 import StarRating from './StarRating';
 import { MovieDetailsType } from '../App-v2';
+import { useKey } from '../hooks/useKey';
 
 interface SelectedMovieProps {
   selectedId: string;
@@ -62,15 +63,7 @@ function SelectedMovie({
     };
   }, [movie.Title]);
 
-  useEffect(() => {
-    const handleEscPress = (evt: KeyboardEvent) => {
-      if (evt.code === 'Escape') {
-        onMovieDetailsClose();
-      }
-    };
-    document.addEventListener('keydown', handleEscPress);
-    return () => document.removeEventListener('keydown', handleEscPress);
-  }, [onMovieDetailsClose]);
+  useKey(onMovieDetailsClose, 'Escape');
 
   const handleAdd = () => {
     const newWatchedMovie: MovieDetailsType = {
