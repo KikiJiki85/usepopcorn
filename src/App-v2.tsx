@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import NavBar from './components/NavBar';
 import Main from './components/Main';
 import NumResults from './components/NumResults';
@@ -11,18 +11,10 @@ import WatchedMovieList from './components/WatchedMovieList';
 import Loader from './components/Loader';
 import ErrorMsg from './components/ErrorMsg';
 import SelectedMovie from './components/SelectedMovie';
-
-const KEY = 'c26bf5e5';
+import { useMovies } from './hooks/useMovies';
+import { useLocalStorageState } from './hooks/useLocalStorageState';
 
 export type SelectedIdType = string | null;
-
-export interface MovieType {
-  Title: string;
-  Year: string;
-  imdbID: string;
-  Type: string;
-  Poster: string;
-}
 
 export interface MovieDetailsType {
   Poster?: string;
@@ -36,25 +28,26 @@ export interface MovieDetailsType {
   Director?: string;
   userRating?: number;
   imdbId: string;
+  countRatingDecisions?: number;
 }
 
 function App() {
-  const [movies, setMovies] = useState<MovieType[]>([]);
-  const [watched, setWatched] = useState<MovieDetailsType[]>(() =>
-    JSON.parse(localStorage.getItem('watched') ?? '[]')
-  );
-  const [isLoading, setIsloading] = useState(false);
-  const [error, setError] = useState('');
   const [query, setQuery] = useState('');
   const [selectedId, setSelectedId] = useState<SelectedIdType>(null);
+  const { movies, isLoading, error } = useMovies(query, handleCloseMovie);
+
+  const [watched, setWatched] = useLocalStorageState<MovieDetailsType[]>(
+    [],
+    'watched'
+  );
 
   const handleSelectMovie = (id: SelectedIdType) => {
     setSelectedId((prev) => (prev === id ? null : id));
   };
 
-  const handleCloseMovie = () => {
+  function handleCloseMovie() {
     setSelectedId(null);
-  };
+  }
 
   const handleAddWatch = (movie: MovieDetailsType) => {
     setWatched((prev) => [...prev, movie]);
@@ -63,42 +56,6 @@ function App() {
   const handleRemoveWatch = (id: string) => {
     setWatched((prev) => prev.filter((movie) => movie.imdbId !== id));
   };
-
-  useEffect(() => {
-    localStorage.setItem('watched', JSON.stringify(watched));
-  }, [watched]);
-
-  useEffect(() => {
-    const controller = new AbortController();
-
-    async function fetchMovies() {
-      try {
-        setError('');
-        setIsloading(true);
-        const res = await fetch(
-          `https://www.omdbapi.com/?apikey=${KEY}&s=${query}`,
-          { signal: controller.signal }
-        );
-        if (!res.ok) throw new Error('Something went wrong');
-        const data = await res.json();
-        if (data.Response === 'False') throw new Error('no results...');
-        setMovies(data.Search);
-        setError('');
-      } catch (err) {
-        if (err instanceof Error) {
-          console.log(err.message);
-          if (err.name !== 'AbortError') setError(err.message);
-        }
-      } finally {
-        setIsloading(false);
-      }
-    }
-    if (query.length < 3) return;
-    handleCloseMovie();
-    fetchMovies();
-
-    return () => controller.abort();
-  }, [query]);
 
   return (
     <>

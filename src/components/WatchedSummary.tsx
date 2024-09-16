@@ -26,7 +26,6 @@ function WatchedSummary({ watched, children }: WatchedSummaryProps) {
       })
       .filter((rating): rating is number => rating !== undefined)
   );
-  console.log(avgRuntime);
   return (
     <>
       <CollapseBtn isOpen={isOpen} setIsOpen={setIsOpen} />
